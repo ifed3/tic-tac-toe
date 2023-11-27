@@ -6,16 +6,15 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "sourceMap": true,
+      "sourceMap": false,
       "forceConsistentCasingInFileNames": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "moduleResolution": "node",
       "resolveJsonModule": true,
       "strictPropertyInitialization": false,
-      "isolatedModules": true,
-      "jsx": "react"
+      "isolatedModules": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "coverage", "__tests__", "jest.config.js"]
   }

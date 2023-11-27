@@ -1,9 +1,6 @@
 import 'reflect-metadata'
+import 'dotenv/config'
 import { DataSource } from 'typeorm'
-import { Game } from './entity/Game'
-import { User } from './entity/User'
-import { Move } from './entity/Move'
-import { Player } from './entity/Player'
 
 const { 
     POSTGRES_USER,
@@ -13,7 +10,6 @@ const {
     POSTGRES_DB
 } = process.env
 
-
 export const AppDataSource = new DataSource({
     type: 'postgres',
     host: POSTGRES_HOST,
@@ -21,9 +17,8 @@ export const AppDataSource = new DataSource({
     username: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
     database: POSTGRES_DB,
-    synchronize: true,
+    synchronize: false,
     logging: true,
-    entities: [User, Game, Player, Move],
-    subscribers: [],
-    migrations: [],
+    entities: ['dist/entity/**/*{.ts,.js}'],
+    migrations: ['dist/migrations/**/*{.ts,.js}']
 })

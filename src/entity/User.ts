@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, JoinColumn, PrimaryGeneratedColumn, OneToOne } from 'typeorm'
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn, JoinColumn } from 'typeorm'
 import { Game } from './Game'
 import { Move } from './Move'
 
@@ -20,4 +20,7 @@ export class User {
     @OneToMany(() => Move, move => move.user)
     @JoinColumn({ name: 'user_id'})
     moves: Move[]
+
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP" })
+    created_at: Date
 }

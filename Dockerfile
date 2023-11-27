@@ -1,13 +1,22 @@
-FROM node:alpine
+FROM node:20 as dev
 
-RUN apk update
+WORKDIR /usr/src/app
 
-WORKDIR /forever
+COPY package*.json ./
 
-COPY ["package*.json", "tsconfig.json", ".env", "./"]
+RUN npm ci
 
-RUN npm install
-
-COPY ./src ./src
+COPY tsconfig.json .env ./
+COPY src/ src/
 
 RUN npm run build
+
+FROM node:20 as prod
+
+WORKDIR /prod
+
+COPY package*.json .env ./
+
+RUN npm ci --omit=dev
+
+COPY --from=dev /usr/src/app/dist ./dist

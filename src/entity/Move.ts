@@ -1,17 +1,26 @@
-import { Entity, Column, ManyToOne, PrimaryColumn, Timestamp } from 'typeorm'
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Game  } from './Game'
 import { User } from './User'
 
 @Entity()
 export class Move {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
+    moveId: string
+
+    @Column()
     gameId: string
 
-    @PrimaryColumn()
+    @Column()
     userId: string
 
     @Column()
     symbol: string
+
+    @Column()
+    row: number
+
+    @Column()
+    column: number
 
     @ManyToOne(() => Game, game => game.moves)
     game: Game
@@ -19,6 +28,6 @@ export class Move {
     @ManyToOne(() => User, user => user.moves)
     user: User
 
-    @Column({ type: 'timestamptz' })
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP" })
     created_at: Date
 }

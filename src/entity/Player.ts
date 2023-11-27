@@ -1,6 +1,7 @@
-import { Entity, Column, OneToMany, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm'
+import { Entity, Column, ManyToOne, PrimaryColumn, JoinTable, OneToMany } from 'typeorm'
 import { Game  } from './Game'
 import { User } from './User'
+import { Move } from './Move'
 
 @Entity()
 export class Player implements Player {
@@ -9,13 +10,18 @@ export class Player implements Player {
 
     @PrimaryColumn()
     userId: string
+    @ManyToOne(() => Game, game => game.players)
+    game: Game
+
+    @ManyToOne(() => User, user => user)
+    user: User
 
     @Column()
     symbol: string
 
-    @ManyToOne(() => Game, game => game.players)
-    game: Game
+    @Column({ default: false })
+    computer: boolean
 
-    @OneToOne(() => User, user => user)
-    user: User
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP" })
+    joined_at: Date
 }
